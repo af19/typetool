@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TypeTool</title>
+  <script src="//use.typekit.net/gva3lki.js"></script>
+  <script>try{Typekit.load();}catch(e){}</script>
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans|Andika|Gentium+Basic|Tienne|Alegreya|Montserrat|Capriola|Inika|Open+Sans|Quando|Trykker' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <style type="text/css">
+    #wrapper {
+      position: absolute;
+      /*border: 1px solid black;*/
+      width: 100%;
+    }
+    #pangrams {
+      width: 75%;
+      position: relative;
+      margin: 0 auto;
+/*      border: 1px solid #ccc;
+*/      padding: 75px 0;
+    }
+    #settings {
+      position: relative;
+      width: 75%;
+      margin: 0 auto;
+      display: none;
+    }
+    nav {
+      margin: 0 auto;
+      position: relative;
+      width: 75%;
+      text-align: right;
+      padding-top: 25px;
+    }
+
+    header {
+      margin: 0 auto;
+      position: relative;
+      width: 75%;
+      border-bottom: 5px solid black;
+      padding: 210px 0 10px;
+    }
+    h1 {
+      font-size: 4.7em;
+      letter-spacing: 2px;
+    }
+    .attributes {
+      clear: left;
+      float: left;
+      font-weight: bold;
+    }
+    #fontfamVal, #fontszVal, #linehtVal {
+      font-weight: normal;
+    }
+    #red, #green, #blue {
+      display: inline;
+      float: left;
+      clear: left;
+      width: 210px;
+      height: 5px;
+      margin: 15px 0 25px;
+    }
+    #red .ui-slider-range { background: #555; }
+    #red .ui-slider-handle { border-color: #555; height: 12px; }
+    #green .ui-slider-range { background: #555; }
+    #green .ui-slider-handle { border-color: #555; height: 12px; }
+    #blue .ui-slider-range { background: #555; }
+    #blue .ui-slider-handle { border-color: #555; height: 12px; }
+
+  </style>
+</head>
+<body>
+  
+  <div id="wrapper">
+    <nav><button type="button" class="btn btn-default" id="toggle-settings">Settings</button></nav>
+    <section id="settings">
+      <div class="attributes">font-family:&nbsp;&nbsp;<span id="fontfamVal"></span></div>
+      <div id="red"></div>
+      <div class="attributes">font-size:&nbsp;&nbsp;<span id="fontszVal"></span></div>
+      <div id="green"></div>
+      <div class="attributes">line-height:&nbsp;&nbsp;<span id="linehtVal"></span></div>
+      <div id="blue"></div>
+    </section>
+    <header><h1>TypeTool</h1></header>
+    <section id="pangrams">
+      <p>Fred specialized in the job of making very quaint wax toys. When we go back to Juarez, Mexico, do we fly over picturesque Arizona? Jaded zombies acted quaintly but kept driving their oxen forward. Ebenezer unexpectedly bagged two tranquil aardvarks with his jiffy vacuum cleaner. Queen Elizabeth's proxy waved off Mick&nbsp;Jagger.</p>
+    </section>
+    
+    
+  </div>
+
+
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    //$("#settings").hide();
+    $("#toggle-settings").click(function() {
+      $("#settings").fadeToggle();
+    });
+
+    function refreshFontFamily() {
+      var fontfam = ["helvetica", "ff-meta-serif-web-pro", "skolar", "ff-dagny-web-pro", "minion-pro", "din-condensed-web", "proxima-nova", "adelle", "chaparral-pro", "kulturista-web", "museo-slab", "ff-tisa-web-pro", "PT Sans", "Andika", "Gentium Basic", "Tienne", "Alegreya", "Montserrat", "Capriola", "Inika", "Open Sans", "Quando", "Trykker" ];
+      var red = $( "#red" ).slider( "value" );
+      var change = fontfam[red];
+      $("#pangrams").css("font-family", change);
+      $("#fontfamVal").text(change);
+    }
+
+    function refreshSwatch() {
+      var green = $( "#green" ).slider( "value" ),
+        blue = $( "#blue" ).slider( "value" );
+        //hex = hexFromRGB( red, green, blue );
+      
+      $("#pangrams").css("font-size", green + "%");
+      $("#pangrams").css("line-height", blue + "%");
+      $("#fontszVal").text(green + "%");
+      $("#linehtVal").text(blue + "%");
+    }
+    $(function() {
+      $( "#green, #blue" ).slider({
+        orientation: "horizontal",
+        range: "min",
+        max: 500,
+        value: 1,
+        slide: refreshSwatch,
+        change: refreshSwatch
+      });
+      //$( "#red" ).slider( "value", 50 );
+      $( "#green" ).slider( "value", 120 );
+      $( "#blue" ).slider( "value", 150 );
+    });
+    $(function() {
+      $( "#red" ).slider({
+        orientation: "horizontal",
+        range: "min",
+        max: 22,
+        value: 1,
+        slide: refreshFontFamily,
+        change: refreshFontFamily
+      });
+      $( "#red" ).slider( "value", 0 );
+    });
+  </script>
+</body>
+</html>
